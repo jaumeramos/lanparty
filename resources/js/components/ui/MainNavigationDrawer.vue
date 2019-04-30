@@ -72,7 +72,8 @@ export default {
       items: [
         { icon: 'home', text: 'Home', href: '/home' },
         { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors', new: true  },
-        { icon: 'favorite_border', text: 'Premis', href: '/premis', new: true },
+        { icon: 'favorite_border', text: 'Premiss', href: '/premis', new: true },
+        { icon: 'flag', text: 'Capture The Flag', href: '/ctf', new: true },
         { heading: 'Links'},
         { icon: 'link', text: 'Institut de l\'Ebre', href: 'https://www.iesebre.com', new: true },
         { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , new: true },
