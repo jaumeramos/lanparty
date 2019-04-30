@@ -33,9 +33,15 @@
   src: local('Futurama Bold Font'), url('/fonts/fr-bold.woff') format('woff');
 }
 
+
 input[type=text]{
   background-color: #ffffff !important;
 }
+
+.theme--light.v-sheet{
+  background-color: transparent !important;
+}
+
 .msg{
   font-family: "Futurama Bold Font", Monaco, monospace;
   font-size: 20px;
@@ -68,7 +74,8 @@ input[type=text]{
         console.log(this.fields)
         this.errors = {};
         axios.post('/ctfSubmit', this.fields).then(response => {
-            alert(response);
+            alert("Flag Capturat!!!");
+            window.location.reload();
           }).catch(error => {
             if (error.response.status === 422) {
               console.log(error.response)

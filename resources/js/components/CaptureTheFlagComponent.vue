@@ -1,6 +1,6 @@
 <template>
-    <v-card class="">
-        <v-card-title class="black--text">
+    <v-card>
+        <v-card-title class="white--text">
             <h2>Rànquing CTF INSEbre</h2>
         </v-card-title>
         <v-card-text class="px-0 mb-2">
@@ -75,12 +75,13 @@ input[type=text]{
   border-radius: 25px;
   padding: 20px;
 }
-.noo{
-background-image: url("/img/futurama.jpg");
+.theme--light.v-sheet{
+  background-color: transparent !important;
 }
+
 .ctf {
+  background-image: url("/img/futurama.jpg");
   font-family: "Futurama Title Font", Monaco, monospace;
-  background-color: #FFFFFF;
   width: 100%;
   min-height: 550px !important;
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Group;
 use App\Flag;
+use App\Event;
 use Carbon\Carbon;
 use Auth;
 
@@ -17,9 +18,21 @@ use Auth;
 class CaptureTheFlagController extends Controller
 {
 
+
+    public function ctfId(){
+      static $id;
+      if (!isset($id)){
+        $e=Event::where('name', 'Capture The Flag')->first();
+        if($e){
+          $id=$e->id;
+        }
+      }
+      return $id;
+
+    }
     public function registratCTF(){
 
-      $reg=DB::table('members')->join('registrations', 'group_id', 'registration_id')->where('event_id', '=', 7)->where('registration_type', 'App\\Group')->where('user_id', Auth::user()->id)->select('group_id')->first();
+      $reg=DB::table('members')->join('registrations', 'group_id', 'registration_id')->where('event_id', '=', $this->ctfId())->where('registration_type', 'App\\Group')->where('user_id', Auth::user()->id)->select('group_id')->first();
       if (isset($reg)){
         return $reg->group_id;
       } else {
@@ -35,7 +48,7 @@ class CaptureTheFlagController extends Controller
     public function show()
     {
         $flags =Flag::all()->pluck('name')->all();
-        $allGroups=DB::table('groups')->join('registrations', 'groups.id', 'registration_id')->where('event_id', '=', 7)->where('registration_type', 'App\\Group')->select('groups.id')->get();
+        $allGroups=DB::table('groups')->join('registrations', 'groups.id', 'registration_id')->where('event_id', '=', $this->ctfId())->where('registration_type', 'App\\Group')->select('groups.id')->get();
         $out=[];
         foreach ($allGroups as $g){
           $points = 0;
@@ -55,7 +68,6 @@ class CaptureTheFlagController extends Controller
 
         return view('ctf', [
               'groups' => $out,
-              'user' => Auth::user(),
               'registratCTF' => $this->registratCTF() ? "Registrat" : "NoRegistrat"
         ]);
 
@@ -80,37 +92,30 @@ class CaptureTheFlagController extends Controller
        $flag=Flag::where('flag', $request['flag'])->first();
        if ($flag===null){
          return response()->json([
-            'status' => 'error',
-            'msg'    => 'Error al processar',
             'errors' => ['Flag' => 'El Flag No existeix'],
-        ], 422);
+         ], 422);
        } else {
 
          $group_id=$this->registratCTF();
          if (!$group_id){
              return response()->json([
-                'status' => 'error',
-                'msg'    => 'Error al processar',
                 'errors' => ['User' => 'Usuari no registrat en cap grup de la competició'],
-            ], 422);
+             ], 422);
          }
-
 
          $group=Group::findOrFail($group_id);
          $existeix=Group::findOrFail($group_id)->flags()->find($flag->id);
 
          if ($existeix){
            return response()->json([
-              'status' => 'error',
-              'msg'    => 'Error al processar' . $group->id . " " . $flag->id,
-              'errors' => ['Flag' => 'El Flag ' .  $flag->id.  ' ja estava capturat pel grup ' . $group->id,'Group' => $group->id, 'Flag' => $flag->id]
+              'errors' => ['Flag' => 'El Flag ja estava capturat pel grup ']
           ], 422);
          } else {
            $group->flags()->attach($flag->id,['captured'=>Carbon::now()]);
          }
        }
 
-       return response()->json("Flag capturat!! " . $group->id . " " . $flag->id, 200);
+       return response()->json("Flag capturat!!", 200);
    }
 
 

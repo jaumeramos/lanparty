@@ -1,5 +1,5 @@
 <template>
-    <v-card class="primary ctf">
+    <v-card>
         <v-card-title class="white--text">
             <h2>Flags capturades per {{groupName}}</h2>
         </v-card-title>
@@ -72,12 +72,13 @@ img{
   margin-left: auto;
   margin-right: auto;
 }
-.noo{
-  background-image: url("/img/futurama.jpg");
+
+.theme--light.v-sheet{
+  background-color: transparent !important;
 }
 .ctf {
+  background-image: url("/img/futurama.jpg");
   font-family: "Futurama Title Font", Monaco, monospace;
-  background-color: #FFFFFF;
   width: 100%;
   min-height: 550px !important;
 }

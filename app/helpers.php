@@ -458,7 +458,7 @@ if (!function_exists('create_events')) {
                 'image' => '/img/CaptureTheFlag.jpeg',
                 'tickets' => 20, // Número d'usuaris es poden inscriure
                 'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
-                'participants_number' => null,
+                'participants_number' => 3,
                 'published_at' => '2019-04-27 12:00:00',
             ],
             [
